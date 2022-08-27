@@ -12,9 +12,14 @@ import (
 )
 
 func main() {
+	router := RegexRouter{ }
+	router.AddRoute(`^/$`, func(writer http.ResponseWriter, request *http.Request) {
+		writer.Write([]byte("Welcome to the home page"))
+	})
+	
 	server := &http.Server {
 		Addr: ":4000",
-		Handler: NewRequestHandler(),
+		Handler: &router,
 		ReadTimeout: 10 * time.Second,
 		WriteTimeout: 10 * time.Second,
 		MaxHeaderBytes: 1 << 20,	

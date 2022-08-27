@@ -1,4 +1,4 @@
-objects = src/main.go src/RequestHandler.go
+objects = src/main.go src/Router.go
 
 build: $(objects)
 	go build -o run $(objects)
