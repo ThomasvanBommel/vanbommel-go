@@ -1,0 +1,94 @@
+/*
+ * File: home.css
+ * Date: 2022-08-28
+ * Author: Thomas vanBommel
+ */
+
+:root {
+    --max-width: 1100px;
+    
+    --black-1: black;
+    --black-2: #212121;
+    --black-3: #303030;
+    --black-4: #424242;
+
+    --white-1: white;
+    --white-2: #DEDEDE;
+    --white-3: #CFCFCF;
+    --white-4: #BDBDBD;
+    
+    --fg-1: var(--black-1);
+    --fg-2: var(--black-2);
+    --fg-3: var(--black-3);
+    --fg-4: var(--black-4);
+    
+    --bg-1: var(--white-1);
+    --bg-2: var(--white-2);
+    --bg-3: var(--white-3);
+    --bg-4: var(--white-4);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+    	--fg-1: var(--white-1);
+	--fg-2: var(--white-2);
+	--fg-3: var(--white-3);
+	--fg-4: var(--white-4);
+	
+	--bg-1: var(--black-1);
+	--bg-2: var(--black-2);
+	--bg-3: var(--black-3);
+	--bg-4: var(--black-4);
+    }
+}
+
+html {
+    font-size: 16px;
+}
+
+body {
+    margin: 0;
+}
+
+#navbar {
+    padding: 1rem;
+}
+
+#navbar h1 {
+    margin: 0;
+}
+
+main {
+    height: 1100px;
+}
+
+footer {
+    padding: 0.5rem;
+    font-size: 0.6rem;
+}
+
+.container {
+    width: 100%;
+    max-width: var(--max-width);
+    margin: 0 auto;
+}
+
+.primary {
+    background-color: var(--bg-1);
+    color: var(--fg-1);
+}
+
+.secondary {
+    background-color: var(--bg-2);
+    color: var(--fg-2);
+}
+
+.tertiary {
+    background-color: var(--bg-3);
+    color: var(--fg-3);
+}
+
+.quaternary {
+    background-color: var(--bg-4);
+    color: var(--fg-4);
+}

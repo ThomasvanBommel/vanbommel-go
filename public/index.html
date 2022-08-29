@@ -1,0 +1,41 @@
+<!--
+ - File: /index.html
+ - Date: 2022-08-29
+ - Author: Thomas vanBommel
+ -->
+
+<html>
+  <head>
+    <title>Home</title>
+    <link rel="stylesheet" href="/home.css" />
+
+    <script>
+      window.onload = function() {
+	  let year = (new Date()).getFullYear();
+
+	  if(year !== 2022) {
+	      document.querySelector("#year").innerText = ` - ${ year }`;
+	  }
+      };
+    </script>
+  </head>
+  <body class="secondary">
+    <header id="navbar" class="primary">
+      <div class="container">
+	<h1>Welcome home :)</h1>
+      </div>
+    </header>
+
+    <main>
+      <div class="container">
+	content...
+      </div>
+    </main>
+        
+    <footer class="primary">
+      <div class="container">
+	2022<span id="year"></span> &copy; Thomas vanBommel
+      </div>
+    </footer>
+  </body>
+</html>
