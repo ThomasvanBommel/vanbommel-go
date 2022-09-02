@@ -1,10 +1,19 @@
-objects = src/main.go src/Router.go
+source_files = src/main.go src/routes.go
+test_files   = 
 
-build: $(objects)
-	go build -o run $(objects)
+build_filename = run.build
+test_filename  = testing.test
 
-nobuild: $(objects)
-	go run $(objects)
+build: $(source_files)
+	go build -o $(build_filename) $(source_files)
 
-clean: run
-	rm run
+nobuild: $(source_files)
+	go run $(source_files)
+
+test: $(source_files) $(test_files)
+	go test -v -c -o $(test_filename) $(source_files) $(test_files) && \
+	./$(test_filename) && \
+	rm $(test_filename)
+
+clean:
+	rm -f $(build_filename) $(test_filename)
