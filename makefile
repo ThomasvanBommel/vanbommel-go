@@ -10,6 +10,9 @@ build: $(source_files)
 nobuild: $(source_files)
 	go run $(source_files)
 
+watch: $(source_files) scripts/watch.sh
+	./scripts/watch.sh
+
 test: $(source_files) $(test_files)
 	go test -v -c -o $(test_filename) $(source_files) $(test_files) && \
 	./$(test_filename) && \

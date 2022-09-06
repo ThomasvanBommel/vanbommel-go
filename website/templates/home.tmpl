@@ -1,5 +1,5 @@
 <!--
- - File: /index.tmpl
+ - File: home.tmpl
  - Date: 2022-08-29
  - Author: Thomas vanBommel
  -->
@@ -10,32 +10,58 @@
     <link rel="stylesheet" href="/assets/css/home.css" />
 
     <script>
+      let navMenu;
+      
       window.onload = function() {
-		  let year = (new Date()).getFullYear();
+	  let year = (new Date()).getFullYear();
 
-		  if(year !== 2022) {
-			  document.querySelector("#year").innerText = ` - ${ year }`;
-		  }
+	  if(year !== 2022) {
+	      document.querySelector("#year").innerText = ` - ${ year }`;
+	  }
+
+	  navMenu = document.querySelector("#navbar .options .menu");
       };
+
+      function toggleNavMenu() {
+	  if(!navMenu) return;
+
+	  navMenu.classList.toggle("open");
+      }
     </script>
   </head>
-  <body class="secondary">
-    <header id="navbar" class="primary">
-      <div class="container">
-		<h1>Welcome home :)</h1>
+  <body>
+    <header id="navbar">
+      <p class="logo">
+	<a href="/">
+	  VANBOMMEL.CA
+	</a>
+      </p>
+
+      <div class="spacer"></div>
+
+      <div class="options">
+	<div class="icon">
+	  <a href="javascript:toggleNavMenu()">...</a>
+	</div>
+	
+	<ul class="menu">
+	  <li>
+	    <a href="/stats">stats</a>
+	  </li>
+
+	  <li>
+	    <a href="/assets">assets</a>
+	  </li>
+	</ul>
       </div>
     </header>
 
     <main>
-      <div class="container">
-		{{ . }}
-      </div>
+      {{ . }}
     </main>
     
-    <footer class="primary">
-      <div class="container">
-		2022<span id="year"></span> &copy; Thomas vanBommel
-      </div>
+    <footer>
+      2022<span id="year"></span> &copy; Thomas vanBommel
     </footer>
   </body>
 </html>
