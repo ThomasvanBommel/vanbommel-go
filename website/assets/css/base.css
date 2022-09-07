@@ -1,5 +1,5 @@
 /*
- * File: home.css
+ * File: base.css
  * Date: 2022-08-28
  * Author: Thomas vanBommel
  */
@@ -7,21 +7,23 @@
 :root {
     --max-width: 1100px;
 
-    --background-color: #DEDEDE;
-    --foreground-color: #212121;
+    --dark-color:  #212121;
+    --light-color: #DEDEDE;
+
+    --background-color: var(--light-color);
+    --foreground-color: var(--dark-color);
 
     --border: 0.05rem solid var(--foreground-color);
 }
 
 @media (prefers-color-scheme: dark) {
     :root {
-	--background-color: #212121;
-	--foreground-color: #DEDEDE;
+	--background-color: var(--dark-color);
+	--foreground-color: var(--light-color);
     }
 }
 
 * {
-    background-color: var(--background-color);
     color: var(--foreground-color);
 }
 
@@ -56,6 +58,8 @@ body {
     position: -webkit-sticky;
     position: sticky;
     top: 0;
+
+    /* background-color: #f50; */
 }
 
 #navbar .spacer {
@@ -112,7 +116,7 @@ body {
  * Main content of the webpage                                                *
  ******************************************************************************/
 main {
-    height: 1100px;
+    /* height: 1100px; */
     padding: 1rem;
 }
 
@@ -122,5 +126,52 @@ main {
 footer {
     padding: 0.5rem;
     border-top: var(--border);
-    font-size: 0.6rem;
+    font-size: 0.8rem;
+}
+
+footer .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    margin-bottom: 1rem;
+    
+    display: flex;
+    flex-wrap: wrap;
+}
+
+footer .column {
+    flex: 1;
+}
+
+footer .column div {
+    width: max-content;
+    margin: 0 auto;
+}
+
+footer .column a {
+    display: block;
+    padding: 0.25rem 0;
+    /* margin-top: 0.5rem; */
+}
+
+footer .column a:not(:hover):not([href='#']) {
+    text-decoration: none;
+}
+
+footer .copyright {
+    opacity: 0.25;
+}
+
+/*** classes ******************************************************************
+ * Multi-purpose classes                                                      *
+ ******************************************************************************/
+.bg-color {
+    background-color: var(--background-color);
+}
+
+/*** misc *********************************************************************
+ * Miscellaneous                                                              *
+ ******************************************************************************/
+a[href='#'] {
+    text-decoration-line: line-through;
+    opacity: 0.75;
 }

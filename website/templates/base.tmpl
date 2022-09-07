@@ -1,0 +1,132 @@
+<!--
+ - File: base.tmpl
+ - Date: 2022-08-29
+ - Author: Thomas vanBommel
+ -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Home</title>
+    <link rel="stylesheet" href="/assets/css/base.css" />
+    
+    {{ template "head" . }}
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <script>
+      let navMenu;
+      let oldSize;
+      let resizeTimeout;
+
+      /*** onload *************************************************************
+       * Window onload event                                                  *
+       ************************************************************************/
+      window.onload = function() {
+	  let year = (new Date()).getFullYear();
+
+	  if(year !== 2022) {
+	      document.querySelector("#year").innerText = ` - ${ year }`;
+	  }
+
+	  navMenu = document.querySelector("#navbar .options .menu");
+
+	  console.log("Window loaded");
+      };
+
+      /*** onresize ***********************************************************
+       * Window onresize event                                                *
+       ************************************************************************/
+      window.onresize = function() {
+	  if(!oldSize) oldSize = window.innerWidth;
+	  
+	  clearTimeout(resizeTimeout);
+	  resizeTimeout = setTimeout(resizeComplete, 100);
+      };
+
+      /*** resizeComplete *****************************************************
+       * Called after the user has finished resizing the window               *
+       ************************************************************************/
+      function resizeComplete() {
+	  console.log(`Resized window: ${ oldSize } -> ${ window.innerWidth }`);
+	  oldSize = undefined;
+	  
+	  if(window.innerWidth > 600 && navMenu.classList.contains("open")) {
+	      toggleNavMenu();
+	  }
+      }
+
+      /*** toggleNavMenu ******************************************************
+       * Toggle the navMenu between the open and closed state                 *
+       ************************************************************************/
+      function toggleNavMenu() {
+	  if(!navMenu) return;
+
+	  navMenu.classList.toggle("open");
+	  
+	  let state = navMenu.classList.contains("open") ? "open" : "closed";
+	  console.log(`Toggle NavMenu: ${ state }`);
+      }
+    </script>
+  </head>
+  <body class="bg-color">
+    <header id="navbar" class="bg-color">
+      <p class="logo">
+	<a href="/">
+	  VANBOMMEL.CA
+	</a>
+      </p>
+
+      <div class="spacer"></div>
+
+      <div class="options">
+	<div class="icon">
+	  <a href="javascript:toggleNavMenu()">...</a>
+	</div>
+	
+	<ul class="menu bg-color">
+	  <li>
+	    <a href="/stats">stats</a>
+	  </li>
+
+	  <li>
+	    <a href="/assets">assets</a>
+	  </li>
+	</ul>
+      </div>
+    </header>
+
+    <main>
+      {{ template "content" . }}
+    </main>
+    
+    <footer class="bg-color">
+      <div class="container">
+	<div class="column">
+	  <div>
+	    <h3>Links</h3>
+	    <a href="https://cekeh.com">cekeh.com</a>
+	    <a href="https://vanbommel.ca">vanbommel.ca</a>
+	  </div>
+	</div>
+
+	<div class="column">
+	  <div>
+	    <h3>Connect</h3>
+	    <a href="https://github.com/ThomasvanBommel">
+	      Github
+	    </a>
+	    
+	    <a href="https://www.youtube.com/channel/UCbVqDf-obg_ylZZjNp1hK7Q">
+	      Youtube
+	    </a>
+	  </div>
+	</div>
+      </div>
+
+      <center class="copyright">
+	2022<span id="year"></span> &copy; Thomas vanBommel
+      </center>
+    </footer>
+  </body>
+</html>

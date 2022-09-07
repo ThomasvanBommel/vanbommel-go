@@ -7,6 +7,7 @@
 package main
 
 import (
+	"log"
 	"net/http"
 	"html/template"
 	"encoding/json"
@@ -32,16 +33,19 @@ func GetRoutes() []Route {
  * Load a template from the file system. If an error occurs the program will  *
  * panic.                                                                     *
  ******************************************************************************/
-func loadTemplate(path string) *template.Template {
-	return template.Must(template.ParseFiles(path))
+func loadTemplate(filepath ...string) *template.Template {
+	return template.Must(template.ParseFiles(filepath...))
 }
 
 /*** home *********************************************************************
  * Home page Route using a template                                           *
  ******************************************************************************/
 func home() Route {
-	tmpl := loadTemplate("website/templates/home.tmpl")
-	
+	tmpl := loadTemplate(
+		"website/templates/home.tmpl",
+		"website/templates/base.tmpl",
+	)
+
 	return Route{ "/", http.HandlerFunc(
 		func(w http.ResponseWriter, r *http.Request) {
 			// Reject 'catch-all' url paths
@@ -49,8 +53,18 @@ func home() Route {
 				http.NotFound(w, r)
 				return
 			}
-			
-			tmpl.Execute(w, "oil!? we struck it rich!")
+
+			err := tmpl.ExecuteTemplate(
+				w,
+				"base.tmpl",
+				"Welcome home!",
+			)
+
+			if err != nil {
+				http.Error(w, "unable to parse homepage", 500)
+				log.Println(err)
+				return
+			}
 		}),
 	}
 }
@@ -72,14 +86,18 @@ func stats() Route {
 		"/stats",
 		http.HandlerFunc(func (w http.ResponseWriter, r *http.Request) {
 			data, err := json.Marshal(Stats)
-
+			
 			if err != nil {
 				http.Error(w, "error parsing statistics", 500)
 				return
 			}
 			
 			w.Header().Set("Content-Type", "application/json")
-			w.Write(data)
+			
+			if _, err := w.Write(data); err != nil {
+				http.Error(w, "unable to writer response", 500)
+				return
+			}
 		}),
 	}
 }
